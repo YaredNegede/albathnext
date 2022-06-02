@@ -5,7 +5,7 @@ You have to cd to project root, have java and maven setup already
   2. docker-compose build
 # deploy
   1. docker-compose up
-  2. for swagger got to http://localhost/swagger-ui/index.html
+  2. for swagger got to http://localhost:8080/swagger-ui/index.html
 # swagger
 ****
 ![Screenshot](albatha.png)
