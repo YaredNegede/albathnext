@@ -13,6 +13,9 @@ public interface MovieClient {
     @GetMapping("/discover/movie")
     FeignMessage search(@SpringQueryMap Map<String,String>  keywords);
 
+    @GetMapping("/search/movie?query={keywords}")
+    FeignMessage discover(@PathVariable("keywords") String  keywords);
+
     @GetMapping("/movie/upcoming")
     FeignMessage discover();
 

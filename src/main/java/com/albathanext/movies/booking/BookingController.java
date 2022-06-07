@@ -23,8 +23,12 @@ public class BookingController {
 
     BookingService bookingService;
 
-    @GetMapping("/")
-    public ResponseEntity<Optional<Page<BookingResult>>>  getAll(@PathVariable("id") Pageable page){
+    public BookingController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
+
+    @PostMapping("/paged")
+    public ResponseEntity<Optional<Page<BookingResult>>>  getAll(@RequestBody Pageable page){
 
         return bookingService.getAll(page);
 
@@ -47,7 +51,7 @@ public class BookingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<BookingResult>> update(BookingResult result){
+    public ResponseEntity<Optional<BookingResult>> update(@RequestBody BookingResult result){
 
         return this.bookingService.update(result);
 
@@ -57,6 +61,13 @@ public class BookingController {
     public ResponseEntity<Optional<List<BookingResult>>> getByRange(@RequestParam("start") LocalDateTime start,@RequestParam("end") LocalDateTime end){
 
         return bookingService.getByRange(start,end);
+
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<Void> book(@RequestBody BookingResult result){
+
+        return bookingService.save(result);
 
     }
 

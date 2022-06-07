@@ -9,3 +9,7 @@ You have to cd to project root, have java and maven setup already
 # swagger
 ****
 ![Screenshot](albatha.png)
+
+## target design
+
+![Screenshot](albathanext.drawio.png)

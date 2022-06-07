@@ -14,6 +14,8 @@ public interface BookingService {
 
     ResponseEntity<Optional<BookingResult>> update(BookingResult result);
 
+    ResponseEntity<Void> save(BookingResult result);
+
     ResponseEntity<Optional<BookingResult>> search(long id);
 
     ResponseEntity<Void> cancel(long id);

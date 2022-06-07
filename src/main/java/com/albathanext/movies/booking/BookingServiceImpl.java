@@ -1,15 +1,21 @@
 package com.albathanext.movies.booking;
 
+import com.albathanext.movies.MovieResult;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+@Service
 public class BookingServiceImpl implements BookingService {
 
     ModelMapper modelMapper = new ModelMapper();
@@ -23,7 +29,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public ResponseEntity<Optional<List<BookingResult>>>  getByRange(LocalDateTime start, LocalDateTime end) {
 
-        List<Booking> bookings = this.bookingRepository.findByTimeBetween(start,end);
+        List<Booking> bookings = this.bookingRepository.findByDateTimeBetween(start,end);
 
         List<BookingResult> ret = bookings.stream().map(booking -> this.modelMapper.map(bookings, BookingResult.class)).collect(Collectors.toList());
 
@@ -40,6 +46,16 @@ public class BookingServiceImpl implements BookingService {
 
         return ResponseEntity.ok().build();
 
+    }
+
+    @Override
+    public ResponseEntity<Void> save(BookingResult result) {
+
+        Booking booking = this.modelMapper.map(result, Booking.class);
+
+        this.bookingRepository.save(booking);
+
+        return ResponseEntity.ok().build();
     }
 
     @Override
@@ -68,9 +84,11 @@ public class BookingServiceImpl implements BookingService {
 
         Page<Booking> found = this.bookingRepository.findAll(page);
 
-        Page<BookingResult> res = found.map(booking -> this.modelMapper.map(booking, BookingResult.class));
+//        Page<BookingResult> res = found.map(booking -> this.modelMapper.map(booking, BookingResult.class));
 
-        return ResponseEntity.ok(Optional.of(res));
+        List<BookingResult> ret = IntStream.of(1, 2, 3, 4, 5).mapToObj(operand -> BookingResult.builder().dateTime(LocalDate.now()).numberofPerson(3).movie(new MovieResult()).build()).collect(Collectors.toList());
+
+        return ResponseEntity.ok(Optional.of( new PageImpl<>(ret)));
 
     }
 

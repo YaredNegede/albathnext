@@ -47,6 +47,17 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
+    public ResponseEntity<List<MovieResult>> discover(String query) {
+
+        FeignMessage movies = movieClient.discover(query);
+
+        List<MovieResult> res = movies.getResults().stream().map(movie -> this.modelMapper.map(movie,MovieResult.class)).collect(Collectors.toList());
+
+        return  ResponseEntity.ok(res);
+
+    }
+
+    @Override
     public ResponseEntity<Optional<MovieResult>> getDetail(long id) {
 
         Movie result = movieClient.getDetail(id);

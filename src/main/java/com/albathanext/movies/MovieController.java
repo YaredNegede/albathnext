@@ -39,6 +39,13 @@ public class MovieController {
 
     }
 
+    @GetMapping("/query")
+    public ResponseEntity<List<MovieResult>> discover(@RequestParam("query") String query){
+
+        return movieService.discover(query);
+
+    }
+
     @GetMapping("/discover")
     public ResponseEntity<List<MovieResult>> discover(){
 
