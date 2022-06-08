@@ -1,5 +1,6 @@
 package com.albathanext.movies.booking;
 
+import com.albathanext.movies.MovieRepository;
 import com.albathanext.movies.MovieResult;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -22,8 +23,11 @@ public class BookingServiceImpl implements BookingService {
 
     BookingRepository bookingRepository;
 
-    public BookingServiceImpl(BookingRepository bookingRepository) {
+    MovieRepository movieRepository;
+
+    public BookingServiceImpl( BookingRepository bookingRepository, MovieRepository movieRepository) {
         this.bookingRepository = bookingRepository;
+        this.movieRepository = movieRepository;
     }
 
     @Override
@@ -52,6 +56,10 @@ public class BookingServiceImpl implements BookingService {
     public ResponseEntity<Void> save(BookingResult result) {
 
         Booking booking = this.modelMapper.map(result, Booking.class);
+
+        booking.getMovie().setId(0); // this is just for cache and protect transient error
+
+        movieRepository.save(booking.getMovie());
 
         this.bookingRepository.save(booking);
 
@@ -84,11 +92,9 @@ public class BookingServiceImpl implements BookingService {
 
         Page<Booking> found = this.bookingRepository.findAll(page);
 
-//        Page<BookingResult> res = found.map(booking -> this.modelMapper.map(booking, BookingResult.class));
+        Page<BookingResult> res = found.map(booking -> this.modelMapper.map(booking, BookingResult.class));
 
-        List<BookingResult> ret = IntStream.of(1, 2, 3, 4, 5).mapToObj(operand -> BookingResult.builder().dateTime(LocalDate.now()).numberofPerson(3).movie(new MovieResult()).build()).collect(Collectors.toList());
-
-        return ResponseEntity.ok(Optional.of( new PageImpl<>(ret)));
+        return ResponseEntity.ok(Optional.of(res));
 
     }
 

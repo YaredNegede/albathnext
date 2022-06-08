@@ -1,17 +1,18 @@
 package com.albathanext.movies;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Movie {
 
     @Id
@@ -22,6 +23,7 @@ public class Movie {
 
     private boolean adult;
 
+    @Column(columnDefinition="TEXT")
     private String overview;
 
     private String release_date;

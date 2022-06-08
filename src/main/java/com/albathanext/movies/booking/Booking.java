@@ -30,8 +30,8 @@ public class Booking {
     private LocalDate dateTime;
 
     @NotNull
-    @OneToMany
-    private Set<Movie> movie;
+    @OneToOne
+    private Movie movie;
 
     @NotNull
     private String venu;

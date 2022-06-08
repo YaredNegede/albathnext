@@ -12,12 +12,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieResult {
+
     private String poster_path;
     private boolean adult;
     private String overview;
     private String release_date;
     private List<Integer> genre_ids;
-    private long id;
     private String original_title;
     private String original_language;
     private String title;

@@ -6,11 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 /**
+ * Documentations.
  * View all bookings
  * Cancel a Booking
  * Search booking (keyword search that will look into email, first and last name)
@@ -27,11 +27,9 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PostMapping("/paged")
-    public ResponseEntity<Optional<Page<BookingResult>>>  getAll(@RequestBody Pageable page){
-
-        return bookingService.getAll(page);
-
+    @GetMapping("/paged")
+    public ResponseEntity<Optional<Page<BookingResult>>>  getAll(Pageable pageable){
+        return bookingService.getAll(pageable);
     }
 
     @GetMapping("/cancel/{id}")
