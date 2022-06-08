@@ -55,6 +55,13 @@ public class BookingController {
 
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id){
+
+        return this.bookingService.delete(id);
+
+    }
+
     @GetMapping("/between")
     public ResponseEntity<Optional<List<BookingResult>>> getByRange(@RequestParam("start") LocalDateTime start,@RequestParam("end") LocalDateTime end){
 

@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BookingResult {
 
+    private Long id;
+
     @NotNull
     private MovieResult movie;
 
@@ -28,6 +30,9 @@ public class BookingResult {
 
     @NotNull
     private String venu;
+
+    @NotNull
+    private String status="new";
 
     private Integer numberofPerson;
 

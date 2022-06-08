@@ -21,4 +21,6 @@ public interface BookingService {
     ResponseEntity<Void> cancel(long id);
 
     ResponseEntity<Optional<Page<BookingResult>>> getAll(Pageable page);
+
+    ResponseEntity<Void> delete(long id);
 }

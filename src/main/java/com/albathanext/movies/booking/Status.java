@@ -1,5 +1,6 @@
 package com.albathanext.movies.booking;
 
 public enum Status {
-    cancel
+    cancel,
+    active
 }

@@ -1,20 +1,15 @@
 package com.albathanext.movies.booking;
 
 import com.albathanext.movies.MovieRepository;
-import com.albathanext.movies.MovieResult;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -96,6 +91,12 @@ public class BookingServiceImpl implements BookingService {
 
         return ResponseEntity.ok(Optional.of(res));
 
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(long id) {
+        this.bookingRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 
 }

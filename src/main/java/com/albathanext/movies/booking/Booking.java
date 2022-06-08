@@ -5,13 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Data
 @Builder
@@ -24,13 +22,14 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @NotNull
-    private Status status;
+    private Status status=Status.active;
 
     @NotNull
     private LocalDate dateTime;
 
     @NotNull
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Movie movie;
 
     @NotNull
@@ -39,7 +38,4 @@ public class Booking {
     @NotNull
     private Integer numberofPerson;
 
-    public void setStatus(Status cancel) {
-        this.status = cancel;
-    }
 }
